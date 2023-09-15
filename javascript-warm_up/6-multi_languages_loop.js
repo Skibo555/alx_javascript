@@ -3,4 +3,7 @@ let object = {
     python: "Python is cool\n",
     javaScript: "JavaScript is amazing"
 }
-console.log(object.c + object.python + object.javaScript)
+let iterations = 1;
+for (let i = 0; i < iterations; i++) {
+    console.log(object.c + object.python + object.javaScript)
+}
