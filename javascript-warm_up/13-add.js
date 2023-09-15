@@ -1,6 +1,7 @@
-let myObject = {
-    add: function (a, b) {
-        let additions = a + b;
-        return additions
-    }
+function add(a, b) {
+    return (a + b);
 }
+
+module.exports = {
+    add: add
+};
