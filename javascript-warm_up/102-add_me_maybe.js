@@ -1,11 +1,8 @@
 const addMeMaybe = function (x, theFunction) {
-    return {
-        value: x,
-        theFunction: function () {
-            return this.value + 1;
-        },
-    };
+    let i = x + 1; {
+        return theFunction(i);
+    }
 };
 module.exports = {
     addMeMaybe: addMeMaybe
-};
+}
