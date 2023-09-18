@@ -1,6 +1,6 @@
 class Rectangle {
-    constructor(lenght, breath) {
-        this.lenght = lenght;
-        this.breath = breath;
+    constructor(length, width) {
+        this.length = length;
+        this.width = width;
     }
 }
