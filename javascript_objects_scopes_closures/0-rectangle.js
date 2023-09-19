@@ -1,8 +1,5 @@
 class Rectangle {
-    constructor(length, width) {
-        this.length = length;
-        this.width = width;
+    constructor() {
+        // an empty constructor in js
     }
 }
-
-export default Rectangle;
