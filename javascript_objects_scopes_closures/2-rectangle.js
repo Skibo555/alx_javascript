@@ -1,3 +1,4 @@
+#!/usr/bin/node
 class Rectangle {
     constructor(w, h) {
         // an empty constructor in js
