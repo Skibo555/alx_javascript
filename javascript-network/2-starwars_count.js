@@ -5,7 +5,7 @@ const request = require('request');
 
 const url = process.argv[2];
 
-request.get(url, (error, response, body) {
+request.get(url, function (error, response, body) {
     const filmData = JSON.parse(body);
     const films = filmData.results.filter((film) =>
         film.characters.some((url1) =>
