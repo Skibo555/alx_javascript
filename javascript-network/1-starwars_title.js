@@ -8,7 +8,7 @@ if (process.argv.length !== 3) {
 const id = process.argv[2];
 const apiUrl = 'https://swapi-api.alx-tools.com/api/films/' + id;
 routes = [];
-request.get(url)
+request.get(apiUrl)
     .on('data', function (data) {
         routes.push(data);
     })
