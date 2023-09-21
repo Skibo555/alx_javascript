@@ -5,8 +5,8 @@ const request = require('request');
 const url = process.argv[2];
 
 request.get(url, function (response, body) {
-    const filmData = JSON.parse(body);
-    const actor = filmData.results.filter((film) =>
+    const films = JSON.parse(body);
+    const actor = films.results.filter((film) =>
         film.characters.some((characterUrl) =>
             characterUrl.endsWith('/18/'))
     );
