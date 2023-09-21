@@ -6,14 +6,12 @@ if (process.argv.length !== 3) {
     process.exit(1);
 }
 const id = 18;
-const url = process.argv[2] + id;
-routes = [];
-request.get(url)
-    .on('data', function (data) {
-        routes.push(data);
-    })
-    .on('complete', function () {
-        const good = data.filter(d => d.Text && d.Text.startsWith('Wedge Antilles'));
-        const res = JSON.parse(good)
-        console.log(res)
-    })
+const url = process.argv[2];
+
+request.get(apiUrl, (response, body));
+const filmData = JSON.parse(body);
+
+const films = filmData.results.filter((film) =>
+    film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${id}/`)
+);
+console.log(films)
