@@ -13,7 +13,7 @@ request.get(apiUrl, function (error, response, body) {
             if (completedTask[userId]) {
                 completedTask[userId]++;
             } else {
-                completedTask[userInfo.userId] = 1;
+                completedTask[userId] = 1;
             }
         }
     })
