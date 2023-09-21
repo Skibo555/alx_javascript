@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const request = ('request');
+const request = require('request');
 
 const apiUrl = process.argv[2];
 const completedTask = [];
