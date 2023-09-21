@@ -2,14 +2,16 @@
 
 const request = require('request');
 
+if (process.argv.length !== 3) {
+    process.exit(1);
+}
+const id = 18;
 const url = process.argv[2];
 
-request.get(url, function (response, body) {
-    const films = JSON.parse(body);
-    const character = films.results.filter((film) =>
-        film.characters.some((characterUrl) =>
-            characterUrl.endsWith('/18/'))
-    );
-    const counter = character.length;
-    console.log(counter);
-});
+request.get(url, (error, response, body));
+const filmData = JSON.parse(body);
+
+const films = filmData.results.filter((film) =>
+    film.characters.includes(`https://swapi-api.alx-tools.com/api/people/${id}/`)
+);
+console.log(films)
