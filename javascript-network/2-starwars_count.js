@@ -1,6 +1,5 @@
 #!/usr/bin/node
 
-const { addAbortListener } = require('events');
 const request = require('request');
 
 if (process.argv.length !== 3) {
@@ -14,14 +13,7 @@ request.get(url)
         routes.push(data);
     })
     .on('complete', function () {
-        const res = JSON.parse(routes);
-        let films = 0;
-        res.results.forEach(function (actiste) {
-            actiste.characters.forEach((act) => {
-                if (actiste.includes(url)) {
-                    films++;
-                }
-            })
-        })
-        console.log(files);
+        const good = data.filter(d => d.Text && d.Text.startsWith('Wedge Antilles'));
+        const res = JSON.parse(good)
+        console.log(res)
     })
