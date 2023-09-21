@@ -7,5 +7,5 @@ if (process.argv.length !== 3) {
 }
 const id = process.argv[2];
 const apiUrl = 'https://swapi-api.alx-tools.com/api/films/' + id;
-req = request.get(apiUrl)
-console.log(req);
+req = request.get(apiUrl, (response, body))
+console.log(body);
