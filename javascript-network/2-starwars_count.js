@@ -11,5 +11,5 @@ request.get(url, function (response, body) {
             characterUrl.endsWith('/18/'))
     );
     const counter = actor.length;
-    console.log(number);
+    console.log(counter);
 });
