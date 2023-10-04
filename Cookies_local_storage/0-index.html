@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="path/to/vanilla.js"></script>
+    <style>
+        form {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+    <h1>Login to the website</h1>
+    </p>
+    <form action="/src/index.js">
+        <label for="firstname"></label>
+        <input type="text" id="firstname" name="firstname" placeholder="Firstname"><br><br>
+        <label for="email"></label> &nbsp;&nbsp;
+        <input type="text" id="firstname" name="firstname" placeholder="Email">&nbsp;&nbsp;<br><br>
+        <button onclick="setCookies()">Log me in</button>
+    </form>
+
+    <p>
+    <h1><b>Cookies</b></h1>
+    <button onclick="showCookies()">Show the cookies</button>
+    </p>
+
+    <script>
+        function setCookies(firstname, email) {
+            document.cookie = `firstname=${firstname}; ${expires}; path=/`;
+            document.cookie = `email=${email}; ${expires}; path=/`;
+        }
+        function showCookies() {
+            const paragraph = document.createElement("p");
+            paragraph.innerText = "Cookies";
+            document.body.appendChild(paragraph);
+        };
+    </script>
+
+</body>
+
+</html>

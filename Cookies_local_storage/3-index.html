@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #welcome {
+            display: none;
+            /* Update the ID here to match the HTML */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="welcome">
+        <!-- Update the ID here to match the CSS -->
+        <h1>Welcome <span id="welcome-user"></span> (<a href="#" id="logout-link">logout</a>)</h1>
+    </div>
+    <div id="login-form">
+        <h2>Login to the website</h2>
+        <form>
+            <label for="firstname"></label>
+            <input type="text" id="firstname" name="firstname" placeholder="Firstname"><br><br>
+            <label for="email">&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" id="email" name="email" placeholder="Email">&nbsp;&nbsp;&nbsp;
+            <button onclick="setCookies()">Log me in</button>
+        </form>
+    </div>
+
+    <p>
+    <h1><b>Cookies</b></h1>
+    <button onclick="showCookies()" id="messageButton">Show the cookies</button>
+    </p>
+
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById("firstname").value;
+            const email = document.getElementById("email").value;
+            let date = new Date();
+            date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = `firstname=${firstname}; ${expires}; path=/`;
+            document.cookie = `email=${email}; ${expires}; path=/`;
+
+            // Hide the form
+            hideForm();
+        }
+
+        function getCookie(name) {
+            let cookieName = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookieName) == 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function showCookies() {
+            const nameCookie = getCookie('firstname');
+            const emailCookie = getCookie('email');
+            const body = document.body;
+            const newPara = document.createElement('p');
+            newPara.innerHTML = `Email: ${emailCookie} - Firstname: ${nameCookie}`;
+            body.appendChild(newPara);
+        }
+
+        function hideForm() {
+            // Hide the login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.style.display = 'none';
+            }
+
+            // Show the welcome message
+            const welcomeMessage = document.getElementById('welcome');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'block';
+            }
+        }
+
+        function deleteCookiesAndShowForm() {
+            document.cookie = "firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Show the login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.style.display = 'block';
+            }
+
+            // Hide the welcome message
+            const welcomeMessage = document.getElementById('welcome');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+        }
+
+        // Function to show the welcome message or login form
+        function showWelcomeMessageOrForm() {
+            const cookies = document.cookie.split('; ');
+            let firstname = '';
+            let email = '';
+            for (const cookie of cookies) {
+                const [cookieName, value] = cookie.split('=');
+                if (cookieName === 'firstname') {
+                    firstname = value;
+                } else if (cookieName === 'email') {
+                    email = value;
+                }
+            }
+
+            if (firstname && email) {
+                // User is logged in, display the welcome message
+                const welcomeMessage = document.getElementById('welcome');
+                if (welcomeMessage) {
+                    const welcomeUser = document.getElementById('welcome-user');
+                    const logoutLink = document.getElementById('logout-link');
+
+                    // Set the welcome message and link
+                    welcomeUser.textContent = firstname;
+                    logoutLink.textContent = 'logout';
+
+                    // Style the link
+                    logoutLink.style.fontWeight = 'normal';
+                    logoutLink.style.fontStyle = 'italic';
+                    logoutLink.style.marginLeft = '10px';
+
+                    // Add click event to the link
+                    logoutLink.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the default behavior of the link
+                        deleteCookiesAndShowForm();
+                    });
+
+                    // Display the welcome message
+                    welcomeMessage.style.display = 'block';
+                }
+            } else {
+                // Show the login form
+                const loginForm = document.getElementById('login-form');
+                if (loginForm) {
+                    loginForm.style.display = 'block';
+                }
+
+                // Hide the welcome message
+                const welcomeMessage = document.getElementById('welcome');
+                if (welcomeMessage) {
+                    welcomeMessage.style.display = 'none';
+                }
+            }
+        }
+
+        // Call showWelcomeMessageOrForm when the page loads
+        window.onload = showWelcomeMessageOrForm;
+    </script>
+</body>
+
+</html>

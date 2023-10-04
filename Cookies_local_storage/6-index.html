@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple shopping cart</title>
+</head>
+
+<body>
+    <h1 id='heading'>Available Items</h1>
+
+    <script>
+        const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
+        let counter = 0;
+
+        if (typeof Storage !== 'undefined') {
+            createStore();
+            displayCart();
+        } else {
+            alert('Sorry, your browser does not support Web storage. Try again with a better one');
+        }
+
+        function addItemToCart(item) {
+            sessionStorage.setItem(item, true);
+            counter++;
+            displayCart();
+        }
+
+        function createStore() {
+            const unorderedElement = document.createElement('ul');
+            for (let i = 0; i < availableItems.length; i++) {
+                let childItem = document.createElement('li');
+                const itemLink = document.createElement('a');
+                itemLink.text = availableItems[i];
+                itemLink.href = '#';
+                childItem.appendChild(itemLink);
+                unorderedElement.appendChild(childItem);
+                itemLink.addEventListener('click', function () {
+                    addItemToCart(availableItems[i]);
+                });
+            }
+            document.body.appendChild(unorderedElement);
+        }
+
+        function displayCart() {
+            let display = document.createElement('p');
+            let cartCount = 0;
+            for (let i = 0; i < availableItems.length; i++) {
+                if (localStorage.getItem(availableItems[i])) {
+                    cartCount++;
+                }
+            }
+            display.textContent = `You have ${cartCount} items in your cart`;
+            document.body.appendChild(display);
+        }
+
+        //window.onload = createStore;
+    </script>
+
+</body>
+
+</html>

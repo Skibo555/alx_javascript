@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Cart System</title>
+</head>
+
+<body>
+    <h1>Welcome to the Advanced Cart System</h1>
+    <div id="store"></div>
+    <div id="cart"></div>
+
+    <script>
+        const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
+
+        // Check if Session Storage is available
+        if (typeof Storage === 'undefined') {
+            alert('Sorry, your browser does not support Web storage. Try again with a better one.');
+        } else {
+            // Initialize the application
+            createStore();
+            displayCart();
+        }
+
+        function getCartFromStorage() {
+            const cartString = sessionStorage.getItem('cart');
+            return cartString ? JSON.parse(cartString) : {};
+        }
+
+        function addItemToCart(item) {
+            const cart = getCartFromStorage();
+            if (cart[item]) {
+                cart[item]++;
+            } else {
+                cart[item] = 1;
+            }
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+
+        function removeItemfromCart(item) {
+            const cart = getCartFromStorage();
+            delete cart[item];
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+
+        function clearCart() {
+            sessionStorage.removeItem('cart');
+            displayCart();
+        }
+
+        function createStore() {
+            const storeDiv = document.getElementById('store');
+            const h2 = document.createElement('h2');
+            h2.textContent = 'Available products:';
+            storeDiv.appendChild(h2);
+            const itemList = document.createElement('ul');
+            availableItems.forEach(item => {
+                const listItem = document.createElement('li');
+                const itemLink = document.createElement('a');
+                itemLink.textContent = item;
+                itemLink.href = '#';
+                itemLink.addEventListener('click', function () {
+                    addItemToCart(item);
+                });
+                listItem.appendChild(itemLink);
+                itemList.appendChild(listItem);
+            });
+            storeDiv.appendChild(itemList);
+        }
+
+        function displayCart() {
+            const cartDiv = document.getElementById('cart');
+            const h2 = document.createElement('h2');
+            h2.textContent = 'Your cart:';
+            cartDiv.innerHTML = '';
+            cartDiv.appendChild(h2);
+            const cartContentDiv = document.createElement('div');
+            cartDiv.appendChild(cartContentDiv);
+            updateCart(cartContentDiv);
+        }
+
+        function updateCart(cartContentDiv) {
+            const cart = getCartFromStorage();
+            const cartList = document.createElement('ul');
+            if (Object.keys(cart).length === 0) {
+                const emptyCartMessage = document.createElement('li');
+                emptyCartMessage.textContent = 'Your cart is empty';
+                cartList.appendChild(emptyCartMessage);
+            } else {
+                for (const item in cart) {
+                    if (cart.hasOwnProperty(item)) {
+                        const cartItem = document.createElement('li');
+                        cartItem.textContent = `${item} x ${cart[item]} `;
+                        const removeButton = document.createElement('button');
+                        removeButton.textContent = 'Remove';
+                        removeButton.addEventListener('click', function () {
+                            removeItemfromCart(item);
+                        });
+                        cartItem.appendChild(removeButton);
+                        cartList.appendChild(cartItem);
+                    }
+                }
+                const clearCartButton = document.createElement('button');
+                clearCartButton.textContent = 'Clear my cart';
+                clearCartButton.addEventListener('click', function () {
+                    clearCart();
+                });
+                cartList.insertBefore(clearCartButton, cartList.firstChild);
+            }
+            cartContentDiv.appendChild(cartList);
+        }
+
+        // Initial display of the cart
+        displayCart();
+    </script>
+</body>
+
+</html>
